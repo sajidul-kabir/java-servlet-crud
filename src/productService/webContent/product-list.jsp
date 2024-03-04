@@ -35,7 +35,7 @@
 			<hr>
 			<div class="container text-left">
 
-				<a href="<%=request.getContextPath()%>/new" class="btn btn-success">Add
+				<a href="<%=request.getContextPath()%>/products/new-product" class="btn btn-success">Add
 					New Product</a>
 			</div>
 			<br>
@@ -58,9 +58,12 @@
 							<td><c:out value="${product.name}" /></td>
 							<td><c:out value="${product.price}" /></td>
 
-							<td><a href="edit?id=<c:out value='${product.id}' />">Edit</a>
-								&nbsp;&nbsp;&nbsp;&nbsp; <a
-								href="delete?id=<c:out value='${product.id}' />">Delete</a></td>
+							<td><a href="products/update-product?id=<c:out value='${product.id}' />">Edit</a>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<a
+								href="products/delete-product?id=<c:out value='${product.id}' />">Delete</a>
+
+								</td>
 						</tr>
 					</c:forEach>
 					<!-- } -->

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet({"/"})
+@WebServlet({"/products/*"})
 public class ProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ProductDao productDAO;
@@ -22,7 +22,8 @@ public class ProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getServletPath();
+        String action = request.getPathInfo();
+        System.out.println(action);
         switch (action){
             case "/insert":
                 insertProduct(request, response);
@@ -30,7 +31,6 @@ public class ProductServlet extends HttpServlet {
             case "/update":
                 updateProduct(request, response);
                 break;
-
             default:
                 showError(request,response);
                 break;
@@ -43,26 +43,25 @@ public class ProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getServletPath();
-        switch (action) {
-            case "/new":
-                showNewForm(request, response);
-                break;
-            case "/products":
-                listProducts(request, response);
-                break;
-            case "/delete":
-                deleteProduct(request, response);
-                break;
-            case "/edit":
-                showEditForm(request, response);
-                break;
-            case "/update":
-                updateProduct(request, response);
-                break;
-            default:
-                showError(request, response);
-                break;
+        String action = request.getPathInfo();
+        if (action == null || action.equals("/")) {
+            // If action is null or "/", list all products
+            listProducts(request, response);
+        } else {
+            switch (action) {
+                case "/new-product":
+                    showNewForm(request, response);
+                    break;
+                case "/update-product":
+                    showEditForm(request, response);
+                    break;
+                case "/delete-product":
+                    deleteProduct(request, response);
+                    break;
+                default:
+                    showError(request, response);
+                    break;
+            }
         }
 
     }
@@ -70,7 +69,7 @@ public class ProductServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Product existingProduct = productDAO.selectProductById(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("new-product.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"/new-product.jsp");
         existingProduct.setId(id);
         request.setAttribute("product", existingProduct);
        dispatcher.forward(request, response);
@@ -86,7 +85,7 @@ public class ProductServlet extends HttpServlet {
         Product product = new Product(productName,productPrice);
         productDAO.insertProduct(product);
 
-        response.sendRedirect("products");
+        response.sendRedirect("/products");
     }
 
     private void showError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -95,7 +94,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("new-product.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"/new-product.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -107,7 +106,7 @@ public class ProductServlet extends HttpServlet {
         double productPrice = Double.parseDouble(productPriceStr);
         Product updatedProduct = new Product(productId,name, productPrice);
         productDAO.updateProduct(updatedProduct);
-        response.sendRedirect("products");
+        response.sendRedirect("/products");
     }
 
     private void listProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -119,7 +118,7 @@ public class ProductServlet extends HttpServlet {
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
         productDAO.deleteProduct(Integer.parseInt(id));
-        response.sendRedirect("products");
+        response.sendRedirect("/products");
 
     }
 }
