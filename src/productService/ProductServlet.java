@@ -21,30 +21,42 @@ public class ProductServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+
+        String action = request.getServletPath();
+        switch (action){
+            case "/insert":
+                insertProduct(request, response);
+                break;
+            case "/update":
+                updateProduct(request, response);
+                break;
+
+            default:
+                showError(request,response);
+                break;
+        }
         
     }
+
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String action = request.getServletPath();
         switch (action) {
-                case "/new":
+            case "/new":
                 showNewForm(request, response);
                 break;
-                case "/products": 
+            case "/products":
                 listProducts(request, response);
                 break;
-//                case "/insert":
-//                    insertUser(request, response);
-//                    break;
-//                case "/delete":
-//                    deleteUser(request, response);
-//                    break;
-//                case "/edit":
-//                    showEditForm(request, response);
-//                    break;
+            case "/delete":
+                deleteProduct(request, response);
+                break;
+            case "/edit":
+                showEditForm(request, response);
+                break;
             case "/update":
                 updateProduct(request, response);
                 break;
@@ -53,6 +65,28 @@ public class ProductServlet extends HttpServlet {
                 break;
         }
 
+    }
+
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Product existingProduct = productDAO.selectProductById(id);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("new-product.jsp");
+        existingProduct.setId(id);
+        request.setAttribute("product", existingProduct);
+       dispatcher.forward(request, response);
+    }
+
+    private void insertProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        String productName = request.getParameter("name");
+        String productPriceStr = request.getParameter("price");
+        // Convert the product price to a double
+        double productPrice = Double.parseDouble(productPriceStr);
+
+        Product product = new Product(productName,productPrice);
+        productDAO.insertProduct(product);
+
+        response.sendRedirect("products");
     }
 
     private void showError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,7 +99,15 @@ public class ProductServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void updateProduct(HttpServletRequest request, HttpServletResponse response) {
+    private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String name = request.getParameter("name");
+        String productPriceStr = request.getParameter("price");
+        int productId= Integer.parseInt(request.getParameter("id"));
+        // Convert the product price to a double
+        double productPrice = Double.parseDouble(productPriceStr);
+        Product updatedProduct = new Product(productId,name, productPrice);
+        productDAO.updateProduct(updatedProduct);
+        response.sendRedirect("products");
     }
 
     private void listProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -73,6 +115,12 @@ public class ProductServlet extends HttpServlet {
         request.setAttribute("listProducts", listProducts);
         RequestDispatcher dispatcher = request.getRequestDispatcher("product-list.jsp");
         dispatcher.forward(request, response);
+    }
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        productDAO.deleteProduct(Integer.parseInt(id));
+        response.sendRedirect("products");
+
     }
 }
 

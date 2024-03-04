@@ -15,11 +15,11 @@
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: tomato">
 			<div>
-				<a href="https://www.javaguides.net" class="navbar-brand"> User Management App </a>
+				<a href="http://localhost:8080/products" class="navbar-brand"> Product Management App </a>
 			</div>
 
 			<ul class="navbar-nav">
-				<li><a href="<%=request.getContextPath()%>/list"
+				<li><a href="<%=request.getContextPath()%>/products"
 					class="nav-link">Products</a></li>
 			</ul>
 		</nav>
@@ -28,39 +28,39 @@
 	<div class="container col-md-5">
 		<div class="card">
 			<div class="card-body">
-				<c:if test="${user != null}">
+				<c:if test="${product != null}">
 					<form action="update" method="post">
 				</c:if>
-				<c:if test="${user == null}">
+				<c:if test="${product == null}">
 					<form action="insert" method="post">
 				</c:if>
 
 				<caption>
 					<h2>
-						<c:if test="${user != null}">
+						<c:if test="${product != null}">
             			Edit User
             		</c:if>
-						<c:if test="${user == null}">
-            			Add New User
+						<c:if test="${product == null}">
+            			Add New Product
             		</c:if>
 					</h2>
 				</caption>
 
-				<c:if test="${user != null}">
-					<input type="hidden" name="id" value="<c:out value='${user.id}' />" />
+				<c:if test="${product != null}">
+					<input type="hidden" name="id" value="<c:out value='${product.id}' />" />
 				</c:if>
 
 				<fieldset class="form-group">
 					<label>Name</label> <input type="text"
-						value="<c:out value='${user.name}' />" class="form-control"
+						value="<c:out value='${product.name}' />" class="form-control"
 						name="name" required="required">
 				</fieldset>
 
 
 				<fieldset class="form-group">
 					<label>Price</label> <input type="text"
-						value="<c:out value='${user.country}' />" class="form-control"
-						name="country">
+						value="<c:out value='${product.price}' />" class="form-control"
+						name="price">
 				</fieldset>
 
 				<button type="submit" class="btn btn-success">Save</button>

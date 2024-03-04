@@ -58,9 +58,9 @@
 							<td><c:out value="${product.name}" /></td>
 							<td><c:out value="${product.price}" /></td>
 
-							<td><a href="edit?id=<c:out value='${user.id}' />">Edit</a>
+							<td><a href="edit?id=<c:out value='${product.id}' />">Edit</a>
 								&nbsp;&nbsp;&nbsp;&nbsp; <a
-								href="delete?id=<c:out value='${user.id}' />">Delete</a></td>
+								href="delete?id=<c:out value='${product.id}' />">Delete</a></td>
 						</tr>
 					</c:forEach>
 					<!-- } -->
