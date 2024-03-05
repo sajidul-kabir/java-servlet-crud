@@ -2,6 +2,7 @@ package servlet;
 
 import dao.ProductDao;
 import entity.Product;
+import utils.JdbcConnection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +19,8 @@ public class ProductServlet extends HttpServlet {
     private ProductDao productDAO;
 
     public void init() {
-        productDAO = new ProductDao();
+        JdbcConnection jdbcConnection=new JdbcConnection();
+        productDAO = new ProductDao(jdbcConnection);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -1,19 +1,23 @@
 package dao;
 
 import entity.Product;
+import utils.JdbcConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDao {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/e-commerce?useSSL=false";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "";
-
-    public ProductDao() {
+//    private String jdbcURL = "jdbc:mysql://localhost:3306/e-commerce?useSSL=false";
+//    private String jdbcUsername = "root";
+//    private String jdbcPassword = "";
+private JdbcConnection jdbcConnection;
+    public ProductDao(JdbcConnection connection) {
+        this.jdbcConnection=connection;
     }
+    public ProductDao() {
 
+    }
 
 //
     private static final String SELECT_Product_BY_ID = "select id,name,price from product where id =?";
@@ -23,27 +27,29 @@ public class ProductDao {
     private static final String UPDATE_ProductS_SQL = "update product set name = ?,price= ? where id=?;";
     private static final String DELETE_ProductS_SQL = "delete from product where id = ?;";
 
-    protected Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return connection;
-    }
+
+
+//    protected Connection getConnection() {
+//        Connection connection = null;
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        return connection;
+//    }
 
     public List<Product> selectAllProducts() {
 
-        // using try-with-resources to avoid closing resources (boiler plate code)
         List<Product> Products = new ArrayList<>();
         // Step 1: Establishing a Connection
-        try (Connection connection = getConnection();
+        try (Connection connection = jdbcConnection.getConnection();
+
 
              // Step 2:Create a statement using connection object
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PRODUCTS);) {
@@ -66,7 +72,7 @@ public class ProductDao {
 
     public Product selectProductById(int id){
         Product product = null;
-        try (Connection connection = getConnection();
+        try (Connection connection = jdbcConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_Product_BY_ID);) {
             preparedStatement.setInt(1, id);
             System.out.println(preparedStatement);
@@ -86,7 +92,7 @@ public class ProductDao {
         return product;
     }
     public void insertProduct(Product product){
-        try (Connection connection = getConnection();
+        try (Connection connection = jdbcConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ProductS_SQL);) {
             System.out.println(preparedStatement);
 
@@ -118,7 +124,7 @@ public class ProductDao {
     }
 
     public void updateProduct(Product updatedProduct) {
-        try (Connection connection = getConnection();
+        try (Connection connection = jdbcConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ProductS_SQL);) {
 
             statement.setString(1, updatedProduct.getName());
@@ -132,7 +138,7 @@ public class ProductDao {
         }
     }
     public void deleteProduct(int id) {
-        try (Connection connection = getConnection();
+        try (Connection connection = jdbcConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_ProductS_SQL);) {
 
             statement.setInt(1, id);
