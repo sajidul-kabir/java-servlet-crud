@@ -1,4 +1,6 @@
-package productService;
+package dao;
+
+import entity.Product;
 
 import java.sql.*;
 import java.util.ArrayList;

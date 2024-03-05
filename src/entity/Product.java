@@ -1,4 +1,4 @@
-package productService;
+package entity;
 
 public class Product {
     private int id;
