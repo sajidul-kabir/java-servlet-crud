@@ -19,8 +19,8 @@ public class ProductServlet extends HttpServlet {
     private ProductDao productDAO;
 
     public void init() {
-        JdbcConnection jdbcConnection=new JdbcConnection();
-        productDAO = new ProductDao(jdbcConnection);
+        //JdbcConnection jdbcConnection=new JdbcConnection();
+        productDAO = new ProductDao(JdbcConnection.getInstance());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -73,7 +73,7 @@ public class ProductServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Product existingProduct = productDAO.selectProductById(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"/new-product.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"/product/new-product.jsp");
         existingProduct.setId(id);
         request.setAttribute("product", existingProduct);
        dispatcher.forward(request, response);
@@ -98,7 +98,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"/new-product.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"/product/new-product.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -116,7 +116,7 @@ public class ProductServlet extends HttpServlet {
     private void listProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Product> listProducts = productDAO.selectAllProducts();
         request.setAttribute("listProducts", listProducts);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product-list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/product-list.jsp");
         dispatcher.forward(request, response);
     }
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {

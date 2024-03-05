@@ -20,8 +20,8 @@
 			</div>
 
 			<ul class="navbar-nav">
-				<li><a href="<%=request.getContextPath()%>/products"
-					class="nav-link">Products</a></li>
+				<li><a href="<%=request.getContextPath()%>/orders"
+					class="nav-link">Orders</a></li>
 			</ul>
 		</nav>
 	</header>

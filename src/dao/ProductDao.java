@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDao {
-//    private String jdbcURL = "jdbc:mysql://localhost:3306/e-commerce?useSSL=false";
-//    private String jdbcUsername = "root";
-//    private String jdbcPassword = "";
 private JdbcConnection jdbcConnection;
     public ProductDao(JdbcConnection connection) {
         this.jdbcConnection=connection;
@@ -27,22 +24,6 @@ private JdbcConnection jdbcConnection;
     private static final String UPDATE_ProductS_SQL = "update product set name = ?,price= ? where id=?;";
     private static final String DELETE_ProductS_SQL = "delete from product where id = ?;";
 
-
-
-//    protected Connection getConnection() {
-//        Connection connection = null;
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        return connection;
-//    }
 
     public List<Product> selectAllProducts() {
 
