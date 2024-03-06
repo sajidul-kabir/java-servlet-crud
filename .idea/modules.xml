@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/javaGroundZero.iml" filepath="$PROJECT_DIR$/javaGroundZero.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javaGroundZeroXmlConfig.iml" filepath="$PROJECT_DIR$/javaGroundZeroXmlConfig.iml" />
     </modules>
   </component>
 </project>

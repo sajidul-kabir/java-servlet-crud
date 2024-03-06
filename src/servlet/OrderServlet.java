@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet({"/orders/*"})
+//@WebServlet({"/orders/*"})
 public class OrderServlet extends HttpServlet {
     private OrderDao orderDao;
 
