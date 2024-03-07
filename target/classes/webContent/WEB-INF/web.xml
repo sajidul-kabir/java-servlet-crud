@@ -3,13 +3,12 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <!-- Servlet Configuration -->
+
     <servlet>
         <servlet-name>ProductServlet</servlet-name>
         <servlet-class>servlet.ProductServlet</servlet-class>
     </servlet>
 
-    <!-- Servlet Mappings -->
     <servlet-mapping>
         <servlet-name>ProductServlet</servlet-name>
         <url-pattern>/products/*</url-pattern>
@@ -20,7 +19,6 @@
         <servlet-class>servlet.OrderServlet</servlet-class>
     </servlet>
 
-    <!-- Servlet Mappings -->
     <servlet-mapping>
         <servlet-name>OrderServlet</servlet-name>
         <url-pattern>/orders/*</url-pattern>

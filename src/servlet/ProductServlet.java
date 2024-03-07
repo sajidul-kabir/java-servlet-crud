@@ -73,7 +73,7 @@ public class ProductServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Product existingProduct = productDAO.selectProductById(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"/product/new-product.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/product/new-product.jsp");
         existingProduct.setId(id);
         request.setAttribute("product", existingProduct);
        dispatcher.forward(request, response);
@@ -98,7 +98,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"/product/new-product.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/product/new-product.jsp");
         dispatcher.forward(request, response);
     }
 

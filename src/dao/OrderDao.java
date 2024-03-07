@@ -17,12 +17,10 @@ public class OrderDao {
     public OrderDao(JdbcConnection jdbcConnection) {
         this.jdbcConnection = jdbcConnection;
     }
-    private static final String SELECT_Product_BY_ID = "select id,customer_name,transaction,address,price from orders where id =?";
     private static final String SELECT_ALL_ORDERS = "select * from orders";
     private static final String INSERT_Orders_SQL = "INSERT INTO orders" + "  (customer_name,product,transaction,address) VALUES "
             + " (?, ?,?,?);";
-//    private static final String UPDATE_ProductS_SQL = "update product set name = ?,price= ? where id=?;";
-//    private static final String DELETE_ProductS_SQL = "delete from product where id = ?;";
+
 
 
     public List<Order> selectAllOrders() {

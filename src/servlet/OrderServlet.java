@@ -54,11 +54,11 @@ public class OrderServlet extends HttpServlet {
     private void listOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Order> listOrders = orderDao.selectAllOrders();
         request.setAttribute("listOrders", listOrders);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("order/order-list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/order/order-list.jsp");
         dispatcher.forward(request, response);
     }
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath()+"/order/new-order.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/order/new-order.jsp");
     dispatcher.forward(request, response);
     }
     private void insertOrder(HttpServletRequest request, HttpServletResponse response) throws IOException {
